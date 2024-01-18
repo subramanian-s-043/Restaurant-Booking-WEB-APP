@@ -1,0 +1,309 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 250px;
+    height: 250vh;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+h2{
+    margin: 0;
+    padding: 0;
+}
+#sidebar ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar li {
+    margin-bottom: 10px;
+}
+
+#sidebar a {
+    text-decoration: none;
+    color: #ecf0f1;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+#sidebar a:hover {
+    color: #3498db;
+}
+
+#content {
+    flex: 1;
+    padding: 20px;
+}
+
+#navbar {
+    background-color: #3498db;
+    color: #ecf0f1;
+    padding: 10px;
+    text-align: right;
+}
+
+#navbar a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+#sidebar button {
+    background-color: #2c3e50;
+    border: none;
+    text-decoration: none;
+    color: #ecf0f1;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+#sidebar button:hover {
+cursor: pointer;
+color: #3498db;
+}
+
+#navbar a:hover {
+    color: #2c3e50;
+}
+
+#dashboard {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#calendar {
+  max-width: 950px;
+  height: 100hv;
+  margin: 40px auto;
+}
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.6;
+    color: #555;
+}
+#sidebarElements{
+    display: flex ;
+    flex-direction: column;
+    column-gap: 15px;
+}
+ #bookingForm {
+max-width: 400px;
+margin: 0 auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#bookingForm label {
+display: block;
+margin-bottom: 8px;
+}
+
+#bookingForm select,
+#bookingForm input[type="date"] {
+width: 100%;
+padding: 8px;
+margin-bottom: 16px;
+box-sizing: border-box;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+#bookingForm button {
+background-color: #3498db;
+color: #fff;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1.2em;
+}
+#foodTiming {
+width: 100%;
+margin-top: 20px;
+border-collapse: collapse;
+}
+
+#foodTiming th, #foodTiming td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: left;
+}
+
+#foodTiming th {
+background-color: #3498db;
+color: #fff;
+}
+
+#foodTiming tr:hover {
+background-color: #f5f5f5;
+}
+
+#foodTiming input[type="checkbox"] {
+margin-right: 5px;
+}
+
+.bookButton {
+background-color: #3498db;
+color: #fff;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1em;
+}
+
+.bookButton:hover {
+background-color: #2c3e50;
+}
+
+#loader {
+border: 8px solid #f3f3f3;
+border-top: 8px solid #3498db;
+border-radius: 50%;
+width: 50px;
+height: 50px;
+animation: spin 1s linear infinite;
+margin: auto;
+margin-top: 20px;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+#popupForm {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: #fff;
+padding: 20px;
+border: 1px solid #ccc;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+z-index: 999;
+border-radius: 8px;
+}
+
+#popupForm h2 {
+margin-bottom: 20px;
+font-size: 1.5em;
+}
+
+#popupForm label {
+display: block;
+margin-bottom: 8px;
+}
+
+#popupForm select,
+#popupForm input[type="text"],
+#popupForm input[type="email"],
+#popupForm input[type="datetime"] {
+width: 100%;
+padding: 8px;
+margin-bottom: 16px;
+box-sizing: border-box;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+#popupForm {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: #fff;
+padding: 30px;
+border: 1px solid #3498db;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+z-index: 999;
+border-radius: 10px;
+max-width: 500px;
+width: 100%;
+text-align: center;
+}
+
+#popupForm h2 {
+margin-bottom: 20px;
+color: #3498db;
+}
+
+#popupForm form {
+display: flex;
+flex-direction: column;
+}
+
+#popupForm label {
+display: block;
+margin-bottom: 8px;
+text-align: left;
+font-size: 1em;
+color: #333;
+}
+
+#popupForm select,
+#popupForm input[type="text"],
+#popupForm input[type="email"] {
+width: 100%;
+padding: 12px;    
+box-sizing: border-box;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+#popupForm button {
+background-color: #3498db;
+color: #fff;
+padding: 12px 20px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 1em;
+margin-top: 10px;
+transition: background-color 0.3s ease;
+}
+
+#popupForm button:hover {
+background-color: #2c3e50;
+}
+
+#overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 998;
+}
