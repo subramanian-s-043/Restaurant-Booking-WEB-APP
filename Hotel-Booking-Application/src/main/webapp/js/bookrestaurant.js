@@ -2,7 +2,6 @@ async function bookRestaurant(event) {
 	event.preventDefault();
 	var selectedRestaurant = document.getElementById('restaurant').value;
 	var selectedTime = document.getElementById('date').value;
-	console.log(selectedTime);
 	var showAvailableDiv = document.getElementById('showAvailable');
 	var existing = document.getElementById("foodTiming");
 	if (existing != null) {
@@ -14,8 +13,7 @@ async function bookRestaurant(event) {
 		var loader = document.createElement('div');
 		loader.id = 'loader';
 		showAvailableDiv.appendChild(loader);
-		// Simulate an asynchronous request to the server (you should replace this with your actual AJAX request
-		const url = "/test/FetchRestaurant";
+		const url = "/Hotel-Booking-Application/FetchRestaurant";
 		const response = await fetch(url, {
 			method: "POST",
 			headers: {
@@ -33,8 +31,6 @@ async function bookRestaurant(event) {
 				alert(await response.text());
 			}
 		}, 2000);
-		// Add your logic to display the fetched results in the div
-		//showAvailableDiv.innerHTML = '<p>Results from the server</p>';
 	}
 }
 
@@ -99,7 +95,9 @@ function handleBooking(button) {
 		var emailInput = document.getElementById('email');
 
 		var submitButton = document.getElementById('bookRestaurant');
+		var sendMailText=document.getElementById('sendMail');
 
+		popup.removeChild(sendMailText);
 		popup.removeChild(nameLabel);
 		popup.removeChild(nameInput);
 		popup.removeChild(emailLabel);
@@ -111,11 +109,9 @@ function handleBooking(button) {
 		label.setAttribute("id", "labelBookingFor");
 		label.textContent = "Booking For:";
 
-		// Create select element
 		var select = document.createElement("select");
 		select.setAttribute("id", "bookingFor");
 
-		// Create option elements and add them to the select
 		var optionSelf = document.createElement("option");
 		optionSelf.value = "Self";
 		optionSelf.textContent = "Self";
@@ -126,7 +122,6 @@ function handleBooking(button) {
 		optionOthers.textContent = "Others";
 		select.appendChild(optionOthers);
 
-		// Create button element
 		var button = document.createElement("button");
 		button.setAttribute("id", "continueButton");
 		button.setAttribute("type", "button");
@@ -144,9 +139,10 @@ function handleBooking(button) {
 	document.getElementById("restaurantName").value = document.getElementById('restaurant').value;
 }
 
-function booking(event) {
+async function booking(event) {
 	event.preventDefault();
 	var selected = document.getElementById("bookingFor").value;
+	console.log(selected);
 	var bookingFor = document.getElementById("bookingFor");
 	var label = document.getElementById("labelBookingFor");
 	var popup = document.getElementById("innerForm");
@@ -154,45 +150,61 @@ function booking(event) {
 	popup.removeChild(bookingFor);
 	popup.removeChild(label);
 	popup.removeChild(continueButton);
-	if (selected == "Self") {
+	var nameLabel = document.createElement("label");
+	nameLabel.setAttribute("for", "name");
+	nameLabel.setAttribute("id", "nameLabel");
+	nameLabel.textContent = "Name:";
+	popup.appendChild(nameLabel);
 
-	} else {
-		var nameLabel = document.createElement("label");
-		nameLabel.setAttribute("for", "name");
-		nameLabel.setAttribute("id", "nameLabel");
-		nameLabel.textContent = "Name:";
-		popup.appendChild(nameLabel);
+	var nameInput = document.createElement("input");
+	nameInput.setAttribute("type", "text");
+	nameInput.setAttribute("id", "name");
+	nameInput.setAttribute("name", "name");
+	nameInput.setAttribute("required", "required");
+	popup.appendChild(nameInput);
 
-		var nameInput = document.createElement("input");
-		nameInput.setAttribute("type", "text");
-		nameInput.setAttribute("id", "name");
-		nameInput.setAttribute("name", "name");
-		nameInput.setAttribute("required", "required");
-		popup.appendChild(nameInput);
+	// Create and append the Email input field
+	var emailLabel = document.createElement("label");
+	emailLabel.setAttribute("for", "email");
+	emailLabel.setAttribute("id", "emailLabel");
+	emailLabel.textContent = "Email:";
+	popup.appendChild(emailLabel);
 
-		// Create and append the Email input field
-		var emailLabel = document.createElement("label");
-		emailLabel.setAttribute("for", "email");
-		emailLabel.setAttribute("id", "emailLabel");
-		emailLabel.textContent = "Email:";
-		popup.appendChild(emailLabel);
+	var emailInput = document.createElement("input");
+	emailInput.setAttribute("type", "email");
+	emailInput.setAttribute("id", "email");
+	emailInput.setAttribute("name", "email");
+	emailInput.setAttribute("required", "required");
+	popup.appendChild(emailInput);
 
-		var emailInput = document.createElement("input");
-		emailInput.setAttribute("type", "email");
-		emailInput.setAttribute("id", "email");
-		emailInput.setAttribute("name", "email");
-		emailInput.setAttribute("required", "required");
-		popup.appendChild(emailInput);
+	var sendMailText=document.createElement('p');
+	sendMailText.setAttribute("id", "sendMail");
+	sendMailText.textContent=`(This Booking Will Be Sent to the given Mail-ID)`;
+	popup.appendChild(sendMailText);
 
-		// Create and append the Submit button
-		var submitButton = document.createElement("button");
-		submitButton.setAttribute("type", "submit");
-		submitButton.setAttribute("id", "bookRestaurant");
-		submitButton.textContent = "Submit";
-        submitButton.onclick=function (){
-            submitBookingDetails(event);
-        };
-		popup.appendChild(submitButton);
+	// Create and append the Submit button
+	var submitButton = document.createElement("button");
+	submitButton.setAttribute("type", "submit");
+	submitButton.setAttribute("id", "bookRestaurant");
+	submitButton.textContent = "Submit";
+	submitButton.onclick=function (){
+		submitBookingDetails(event);
+	};
+	popup.appendChild(submitButton);
+	if (selected === "Self") {
+		const url="http://localhost:3000/Hotel-Booking-Application/RetrieveCurrentUser";
+		const response = await fetch(url,{
+		method:"GET",
+			headers:{
+				"Content-Type":"application/json"
+			}
+		});
+		if(response.status===200)
+		{
+			const data= await response.json();
+			nameInput.value=data.name;
+			nameInput.disabled=true;
+		}
 	}
 }
 
@@ -203,25 +215,28 @@ function hidePopup() {
 
 function submitBookingDetails(event) {
     event.preventDefault();
+	alert('inside');
 	// Retrieve values from the pop-up form
-	var popupRestaurant = document.getElementById('popupRestaurant').value;
-	var popupDate = document.getElementById('popupDate').value;
-	var name = document.getElementById('name').value;
-	var mobile = document.getElementById('mobile').value;
+	var popupRestaurant = document.getElementById('restaurant').value;
+	var popupDate = document.getElementById('date').value;
+	var time = document.getElementById('chosenTime').value;
+	var name=document.getElementById('name').value;
+	var email = document.getElementById('email').value;
 
 	// Perform actions with the captured values (e.g., send to the server)
 	console.log('Restaurant Name:', popupRestaurant);
 	console.log('Date:', popupDate);
+	console.log('Time:', time);
+	console.log('Email:', email);
 	console.log('Name:', name);
-	console.log('Mobile Number:', mobile);
-
+	alert('closing');
 	// Close the pop-up form
 	document.getElementById('pop-up').style.display = 'none';
 }
 
 async function logout(event){
 	event.preventDefault();
-	const url="http://localhost:3000/test/Logout"
+	const url="http://localhost:3000/Hotel-Booking-Application/Logout"
 	const response=await fetch(url,{
 		method:"POST"
 	})

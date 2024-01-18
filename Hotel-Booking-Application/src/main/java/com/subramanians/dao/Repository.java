@@ -19,9 +19,6 @@ import com.subramanians.dto.Table;
 public class Repository {
 	static Repository repo=null;
 	Connection connection=null;
-	String username="root";
-	String password="admin";
-	String url="jdbc:mysql://localhost:3306/restaurant_table_booking";
 	PreparedStatement statement;
 	ResultSet result;
 	private Customer currentCustomer;
@@ -31,6 +28,9 @@ public class Repository {
 	public Repository() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			String username="root";
+			String password="admin";
+			String url="jdbc:mysql://localhost:3306/restaurant_table_booking";
 			connection=DriverManager.getConnection(url,username,password);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -4,7 +4,7 @@
 <%@ page import="com.subramanians.dao.*" %>
 <%@ page import="com.subramanians.dto.*" %>
 <% HttpSession isactive=request.getSession(false); if (isactive==null ||
-isactive.getAttribute("isLoggedIn")==null) { response.sendRedirect("login.jsp"); } %>
+isactive.getAttribute("isLoggedIn")==null || Repository.getInstance().getCurrentCustomer()==null) { response.sendRedirect("login.jsp"); } %>
 <!DOCTYPE html>
 <html>
 

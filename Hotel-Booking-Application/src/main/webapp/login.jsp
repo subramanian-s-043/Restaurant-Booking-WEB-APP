@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="javax.servlet.*" %>
+<%@ page import="com.subramanians.dao.*" %>
 <%
 	HttpSession isactive=request.getSession(false);
-	if (isactive != null && isactive.getAttribute("isLoggedIn") != null && (boolean) isactive.getAttribute("isLoggedIn")) {
+	if (isactive != null && isactive.getAttribute("isLoggedIn") != null && (boolean) isactive.getAttribute("isLoggedIn") && Repository.getInstance().getCurrentCustomer()!=null) {
     response.sendRedirect("index.jsp");
 }
 %>
@@ -127,7 +128,7 @@
             	event.preventDefault();
                 var username = document.getElementById('username').value;
                 var password = document.getElementById('password').value;
-                var url = "http://localhost:3000/test/Login";
+                var url = "http://localhost:3000/Hotel-Booking-Application/Login";
 
                 var data = {
                     "username": username,

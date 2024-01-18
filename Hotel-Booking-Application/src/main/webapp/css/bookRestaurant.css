@@ -258,6 +258,12 @@ margin-bottom: 20px;
 color: #3498db;
 }
 
+#popupForm p {
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
 #popupForm form {
 display: flex;
 flex-direction: column;

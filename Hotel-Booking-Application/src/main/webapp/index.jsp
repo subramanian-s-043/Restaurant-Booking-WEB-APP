@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="javax.servlet.*" %>
+    <%@ page import="com.subramanians.dao.*" %>
     <%
 	HttpSession isactive=request.getSession(false);
-	if (isactive == null || isactive.getAttribute("isLoggedIn")==null) 
+	if (isactive == null || isactive.getAttribute("isLoggedIn")==null || Repository.getInstance().getCurrentCustomer()==null) 
 	{
     	response.sendRedirect("login.jsp");
 	}
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 async function logout(event){
 	event.preventDefault();
-	const url="http://localhost:3000/test/Logout"
+	const url="http://localhost:3000/Hotel-Booking-Application/Logout"
 	const response=await fetch(url,{
 		method:"POST"
 	})
