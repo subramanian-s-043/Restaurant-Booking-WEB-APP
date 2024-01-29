@@ -94,6 +94,9 @@ function handleBooking(button) {
 		var emailLabel = document.getElementById('emailLabel');
 		var emailInput = document.getElementById('email');
 
+		var peopleLabel = document.getElementById('peopleLabel');
+		var peopleInput = document.getElementById('numberOfPeople');
+
 		var submitButton = document.getElementById('bookRestaurant');
 		var sendMailText=document.getElementById('sendMail');
 
@@ -102,6 +105,8 @@ function handleBooking(button) {
 		popup.removeChild(nameInput);
 		popup.removeChild(emailLabel);
 		popup.removeChild(emailInput);
+		popup.removeChild(peopleLabel);
+		popup.removeChild(peopleInput);
 		popup.removeChild(submitButton);
 
 		var label = document.createElement("label");
@@ -182,6 +187,19 @@ async function booking(event) {
 	sendMailText.textContent=`(This Booking Will Be Sent to the given Mail-ID)`;
 	popup.appendChild(sendMailText);
 
+	var peopleLabel = document.createElement("label");
+	peopleLabel.setAttribute("for", "people");
+	peopleLabel.setAttribute("id", "peopleLabel");
+	peopleLabel.textContent = "Number Of People:";
+	popup.appendChild(peopleLabel);
+
+	var peopleInput = document.createElement("input");
+	peopleInput.setAttribute("type", "number");
+	peopleInput.setAttribute("id", "numberOfPeople");
+	peopleInput.setAttribute("name", "numberOfPeople");
+	peopleInput.setAttribute("required", "required");
+	popup.appendChild(peopleInput);
+
 	// Create and append the Submit button
 	var submitButton = document.createElement("button");
 	submitButton.setAttribute("type", "submit");
@@ -202,7 +220,7 @@ async function booking(event) {
 		if(response.status===200)
 		{
 			const data= await response.json();
-			nameInput.value=data.name;
+			nameInput.value=data.username;
 			nameInput.disabled=true;
 		}
 	}
@@ -213,7 +231,7 @@ function hidePopup() {
 	document.getElementById("overlay").style.display = "none";
 }
 
-function submitBookingDetails(event) {
+async function submitBookingDetails(event) {
     event.preventDefault();
 	alert('inside');
 	// Retrieve values from the pop-up form
@@ -222,14 +240,26 @@ function submitBookingDetails(event) {
 	var time = document.getElementById('chosenTime').value;
 	var name=document.getElementById('name').value;
 	var email = document.getElementById('email').value;
+	var numberOfPeople = document.getElementById('numberOfPeople').value;
 
-	// Perform actions with the captured values (e.g., send to the server)
-	console.log('Restaurant Name:', popupRestaurant);
-	console.log('Date:', popupDate);
-	console.log('Time:', time);
-	console.log('Email:', email);
-	console.log('Name:', name);
-	alert('closing');
+	let data = {"restaurantName": popupRestaurant , "name": name, "email": email,"numberOfPeople":numberOfPeople,"chosenDate":popupDate,
+				"chosenTime":time};
+	const url="http://localhost:3000/Hotel-Booking-Application/BookTable"
+
+	const response=await fetch(url,{
+		method:"POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data)
+	})
+	if(response.status === 200)
+	{
+		alert('Booking Successfull And Booking Details Mailed Successfully');
+	}else if(response.status === 401)
+	{
+		alert('Booking Successfull And Booking Details Mailed Successfully');
+	}
 	// Close the pop-up form
 	document.getElementById('pop-up').style.display = 'none';
 }

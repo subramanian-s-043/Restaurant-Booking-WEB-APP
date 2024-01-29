@@ -3,7 +3,7 @@
 <%@ page import="com.subramanians.dao.*" %>
 <%
 	HttpSession isactive=request.getSession(false);
-	if (isactive != null && isactive.getAttribute("isLoggedIn") != null && (boolean) isactive.getAttribute("isLoggedIn") && Repository.getInstance().getCurrentCustomer()!=null) {
+	if (isactive != null && isactive.getAttribute("isLoggedIn") != null && (boolean) isactive.getAttribute("isLoggedIn")) {
     response.sendRedirect("index.jsp");
 }
 %>

@@ -227,7 +227,8 @@ margin-bottom: 8px;
 #popupForm select,
 #popupForm input[type="text"],
 #popupForm input[type="email"],
-#popupForm input[type="datetime"] {
+#popupForm input[type="datetime"],
+#popupForm input[type="number"] {
 width: 100%;
 padding: 8px;
 margin-bottom: 16px;

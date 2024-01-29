@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +15,17 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import com.subramanians.dao.Repository;
+import com.subramanians.dto.Customer;
 
 
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @SuppressWarnings("unchecked")
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
     	Repository repo=Repository.getInstance();
         response.setContentType("text/plain");
@@ -51,6 +56,14 @@ public class Login extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("username", username);
             session.setAttribute("isLoggedIn", true);
+            Customer curr=repo.getCurrentCustomer();
+            JSONObject cookieData=new JSONObject();
+            cookieData.put("username", curr.getName());
+            cookieData.put("userId", curr.getId());
+            Cookie cookie = new Cookie("userData", URLEncoder.encode(cookieData.toString(), "UTF-8"));
+            cookie.setPath("/");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
         }else if(username.equals("") || password.equals(""))
         {
         	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

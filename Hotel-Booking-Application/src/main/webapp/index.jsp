@@ -4,7 +4,8 @@
     <%@ page import="com.subramanians.dao.*" %>
     <%
 	HttpSession isactive=request.getSession(false);
-	if (isactive == null || isactive.getAttribute("isLoggedIn")==null || Repository.getInstance().getCurrentCustomer()==null) 
+    Cookie[] cookie=request.getCookies();
+	if (isactive == null || isactive.getAttribute("isLoggedIn")==null || cookie==null) 
 	{
     	response.sendRedirect("login.jsp");
 	}

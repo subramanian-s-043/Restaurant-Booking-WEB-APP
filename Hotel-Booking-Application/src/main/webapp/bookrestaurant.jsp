@@ -4,7 +4,7 @@
 <%@ page import="com.subramanians.dao.*" %>
 <%@ page import="com.subramanians.dto.*" %>
 <% HttpSession isactive=request.getSession(false); if (isactive==null ||
-isactive.getAttribute("isLoggedIn")==null || Repository.getInstance().getCurrentCustomer()==null) { response.sendRedirect("login.jsp"); } %>
+isactive.getAttribute("isLoggedIn")==null) { response.sendRedirect("login.jsp"); } %>
 <!DOCTYPE html>
 <html>
 
@@ -63,7 +63,7 @@ isactive.getAttribute("isLoggedIn")==null || Repository.getInstance().getCurrent
 
             <div class="popup-container" id="popupForm">
                 <h2>Booking-Form</h2>
-                <form id="innerForm">
+                <form id="innerForm" method="POST">
                     <!-- Your form fields go here -->
                     <label for="restaurantName">Restaurant Name:</label>
                     <input type="text" id="restaurantName" name="restaurantName" readonly

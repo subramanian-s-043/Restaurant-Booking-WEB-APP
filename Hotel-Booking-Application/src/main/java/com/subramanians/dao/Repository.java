@@ -62,6 +62,7 @@ public class Repository {
 				String pass=result.getString("password");
 				List<Booking> temp=getBookingHistory(id);
 				setCurrentCustomer(new Customer(id,name,userName,pass,temp));
+				System.out.println("Now Loged-in "+currentCustomer.getName());
 				return true;
 			}
 		}catch(SQLException e)
@@ -143,4 +144,48 @@ public class Repository {
 		}
 		return bookedTimes;
 	}
+	
+	public boolean book(String name,String restaturantName,int numberOfPeople,LocalDate dateReservedFor,LocalTime timeReservedFor,int user_id) {
+		int bookingId=getBookingId();
+		Booking c=new Booking(bookingId, name, restaturantName, numberOfPeople, dateReservedFor, timeReservedFor);
+		//bookedCustomer.add(c);
+		//addToHistory(c);
+		try {
+			statement=connection.prepareStatement("Insert into booked_tables (bookingId,customerName,restaurantName,dateReservedFor,timeReservedFor,numberOfPeople,user_id)VALUES(?,?,?,?,?,?,?)");
+			statement.setInt(1,c.getBookingId());
+			statement.setString(2,c.getCustomerName());
+			statement.setString(3, c.getbookedRestaurant());
+			statement.setDate(4, Date.valueOf(c.getDate()));
+			statement.setTime(5, Time.valueOf(c.getTime()));
+			statement.setInt(6, c.getnumberOfPeoples());
+			statement.setInt(7, user_id);
+			int rowsAffected=statement.executeUpdate();
+			if(rowsAffected > 0)
+			{
+				return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error In DB!");
+		}
+		return false;
+	}
+
+	private int getBookingId() {
+		int count=1;
+		try {
+			statement=connection.prepareStatement("Select * from booked_tables");
+			result=statement.executeQuery();
+			while(result.next())
+			{
+				count=result.getInt("bookingId");
+			}
+		} catch(SQLException e) {
+			
+		}
+		return count+1;
+	}
+	
 }
